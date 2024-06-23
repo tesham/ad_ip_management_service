@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-#-y%p8af1&^@7dipbyjxu5^33z9n&=e3xg%xe8cdp^l5)5(13f
 JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY') if 'JWT_SECRET_KEY' in os.environ else 'n8QgAmK5j3ZxWt6qjPYd_YwN7ap_1gMD1sCZ_ZxHrD1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -128,11 +128,11 @@ REST_FRAMEWORK = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

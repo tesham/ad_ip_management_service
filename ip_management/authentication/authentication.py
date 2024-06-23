@@ -1,6 +1,8 @@
 import jwt
 from rest_framework.authentication import BaseAuthentication
 from rest_framework import exceptions
+
+from ip_management.models.custom_user import CustomUser
 from ip_service import settings
 from django.conf import settings
 
@@ -24,3 +26,12 @@ class SafeJWTAuthentication(BaseAuthentication):
             raise exceptions.AuthenticationFailed('Token prefix missing')
         except Exception as exe:
             raise exceptions.AuthenticationFailed('Invalid token')
+
+        user_dict = dict(
+            name=payload.get('name')
+        )
+
+        user = CustomUser(user_dict)
+        user.is_authenticated = True
+
+        return (user, None)
