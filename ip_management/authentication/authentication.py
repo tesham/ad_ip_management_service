@@ -28,7 +28,8 @@ class SafeJWTAuthentication(BaseAuthentication):
             raise exceptions.AuthenticationFailed('Invalid token')
 
         user_dict = dict(
-            name=payload.get('name')
+            name=payload.get('name'),
+            session_id=payload.get('session_id')
         )
 
         user = CustomUser(user_dict)
