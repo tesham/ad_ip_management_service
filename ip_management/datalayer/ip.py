@@ -1,6 +1,7 @@
 from django.utils import timezone
 
 from ip_management.models import IP
+from ip_management.rabbitmq_producer import send_message
 
 
 class IPDatalayer(object):
@@ -29,15 +30,26 @@ class IPDatalayer(object):
 
 
     @classmethod
-    def create_ip(cls, ip, label, created_by=None):
+    def create_ip(cls, ip, label, created_by=None, user=None):
 
-        ip = IP(
+        ip_model = IP(
             ip=ip,
             label=label,
             created_by=created_by
         )
 
-        ip.save()
+        ip_model.save()
+
+        message = dict(
+            user=user.name if user else '',
+            session_id=user.session_id if user else '',
+            module='IP',
+            label='Creation',
+            action='IP created: ' + ip,
+            ip=ip
+        )
+
+        send_message("audit_queue", message)
 
         return 0
 

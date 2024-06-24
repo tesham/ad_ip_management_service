@@ -47,7 +47,8 @@ class IPAPIView(AuthenticatedView):
             is_error = IPDatalayer.create_ip(
                 ip=serializer.validated_data.get('ip'),
                 label=serializer.validated_data.get('label'),
-                created_by=serializer.validated_data.get('ip')
+                created_by=request.user.name if request.user else None,
+                user=request.user
             )
 
             return Response(
