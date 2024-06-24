@@ -17,5 +17,5 @@ def send_message(queue_name, message):
         properties=pika.BasicProperties(
             delivery_mode=2,  # make message persistent
         ))
-    print('message send')
+    print('message send from IP management')
     connection.close()

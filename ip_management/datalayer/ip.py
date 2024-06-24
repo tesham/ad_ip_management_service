@@ -40,26 +40,46 @@ class IPDatalayer(object):
 
         ip_model.save()
 
-        message = dict(
-            user=user.name if user else '',
-            session_id=user.session_id if user else '',
-            module='IP',
-            label='Creation',
-            action='IP created: ' + ip,
-            ip=ip
-        )
+        try:
+            message = dict(
+                user=user.name if user else '',
+                session_id=user.session_id if user else '',
+                module='IP',
+                label='Create',
+                action='IP created: ' + ip,
+                ip=ip
+            )
 
-        send_message("audit_queue", message)
+            send_message("audit_queue", message)
+
+        except Exception as exe:
+            print('RabbitMQ exception in IP Create', str(exe))
 
         return 0
 
     @classmethod
-    def update_ip(cls, id, label):
+    def update_ip(cls, id, label, user=None):
 
         ip = IP.objects.get(id=id)
+        old_label = ip.label
         ip.label = label
         ip.update_time = timezone.now()
 
         ip.save()
+
+        try:
+
+            message = dict(
+                user=user.name if user else '',
+                session_id=user.session_id if user else '',
+                module='IP',
+                label='Update',
+                action=f'label updated from {old_label} to {ip.label} for ip {ip.ip}',
+                ip=ip.ip
+            )
+
+            send_message("audit_queue", message)
+        except Exception as exe:
+            print('RabbitMQ exception in IP Update', str(exe))
 
         return 0

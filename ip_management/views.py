@@ -67,7 +67,8 @@ class IPAPIView(AuthenticatedView):
             serializer.is_valid(raise_exception=True)
             is_error = IPDatalayer.update_ip(
                 id=serializer.validated_data.get('id'),
-                label=serializer.validated_data.get('label')
+                label=serializer.validated_data.get('label'),
+                user=request.user
             )
 
             return Response(
