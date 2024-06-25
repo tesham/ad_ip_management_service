@@ -17,6 +17,7 @@ class UnauthenticatedView(APIView):
 
 class IPAPIView(AuthenticatedView):
 
+    # Fetch IP data
     def get(self, request):
         try:
             id = request.query_params.get('id', None)
@@ -39,6 +40,7 @@ class IPAPIView(AuthenticatedView):
                 ), status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+    # Create IP data
     def post(self, request):
 
         try:
@@ -61,6 +63,7 @@ class IPAPIView(AuthenticatedView):
                 ), status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+    # Update IP data
     def put(self, request):
         try:
             serializer = IPSerializer(data=request.data)

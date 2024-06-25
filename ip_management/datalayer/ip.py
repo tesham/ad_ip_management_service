@@ -41,6 +41,7 @@ class IPDatalayer(object):
         ip_model.save()
 
         try:
+            # sending audit message to consumer after ip create
             message = dict(
                 user=user.name if user else '',
                 session_id=user.session_id if user else '',
@@ -68,7 +69,7 @@ class IPDatalayer(object):
         ip.save()
 
         try:
-
+            # sending audit message to consumer after ip update
             message = dict(
                 user=user.name if user else '',
                 session_id=user.session_id if user else '',
