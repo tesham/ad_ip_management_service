@@ -1,4 +1,4 @@
-## Django REST API for User Authentication with PostgreSQL
+## Django REST API for IP management with PostgreSQL
 This project implements a RESTful API using Django and Django REST Framework (DRF) for user IP management.
 The API includes IP fetch, create, update request.
 It produces ip task's audit log and send it to audit consumer
