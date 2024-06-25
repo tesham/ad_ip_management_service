@@ -51,15 +51,17 @@ It produces ip task's audit log and send it to audit consumer
 ```
     python manage.py makemigrations ip_management
     python manage.py migrate ip_management
-    
-    model structure:
-    class IP(models.Model):
-        id = [primary key, auto generated]
-        ip = models.CharField(max_length=100, unique=True)
-        create_time = models.DateTimeField(auto_now_add=True)
-        update_time = models.DateTimeField(null=True, blank=True)
-        label = models.CharField(max_length=500, blank=True, null=True)
-        created_by = models.CharField(max_length=250, blank=True, null=True)
+
+    -- Table Definition
+    CREATE TABLE "public"."ip" (
+        "id" int8 NOT NULL,
+        "ip" varchar NOT NULL,
+        "create_time" timestamptz NOT NULL,
+        "update_time" timestamptz,
+        "label" varchar,
+        "created_by" varchar,
+        PRIMARY KEY ("id")
+    );
 ```
 
 6. Put RabbitMQ config in setting.py
